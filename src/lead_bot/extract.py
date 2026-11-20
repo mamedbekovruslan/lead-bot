@@ -15,10 +15,10 @@ SYSTEM = f"""Ты разбираешь заявки клиентов веб-ст
 {json.dumps(Lead.model_json_schema(), ensure_ascii=False)}
 Если данных нет в тексте - null. Ничего не выдумывай"""
 
-def extract(text: str) -> Lead:
+def extract(text: str, temperature: float = 0) -> Lead:
     resp = client.chat.completions.create(
         model=MODEL,
-        temperature=0,
+        temperature=temperature,
         response_format={"type": "json_object"},
         messages=[{"role": "system", "content": SYSTEM},
                  {"role": "user", "content": text}],
